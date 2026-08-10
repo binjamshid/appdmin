@@ -44,4 +44,5 @@ Deno.test("CI supplies placeholders for Compose-only validation", async () => {
   );
   assert.match(workflow, /POSTGRES_PASSWORD: ci-compose-only/);
   assert.match(workflow, /APPDMIN_SECRET_KEY: A{43}=/);
+  assert.match(workflow, /sudo ln -sf .*command -v deno.* \/usr\/bin\/deno/);
 });

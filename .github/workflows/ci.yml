@@ -20,5 +20,6 @@ jobs:
         env:
           POSTGRES_PASSWORD: ci-compose-only
           APPDMIN_SECRET_KEY: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
+      - run: sudo ln -sf "$(command -v deno)" /usr/bin/deno
       - run: systemd-analyze verify deploy/appdmin.service
       - run: docker build -t appdmin:test .
