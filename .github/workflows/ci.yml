@@ -17,5 +17,8 @@ jobs:
           deno-version: v2.x
       - run: deno task verify
       - run: docker compose config --quiet
+        env:
+          POSTGRES_PASSWORD: ci-compose-only
+          APPDMIN_SECRET_KEY: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
       - run: systemd-analyze verify deploy/appdmin.service
       - run: docker build -t appdmin:test .

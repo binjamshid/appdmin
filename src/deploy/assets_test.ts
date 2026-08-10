@@ -37,3 +37,11 @@ Deno.test("CLI serve command invokes the exported server entrypoint", async () =
   assert.match(cli, /const \{ serve \} = await import\("\.\/main\.ts"\)/);
   assert.match(cli, /serve\(\)/);
 });
+
+Deno.test("CI supplies placeholders for Compose-only validation", async () => {
+  const workflow = await Deno.readTextFile(
+    new URL("../../.github/workflows/ci.yml", import.meta.url),
+  );
+  assert.match(workflow, /POSTGRES_PASSWORD: ci-compose-only/);
+  assert.match(workflow, /APPDMIN_SECRET_KEY: A{43}=/);
+});
