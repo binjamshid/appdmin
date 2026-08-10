@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "id": "appdmin.openai",
+  "name": "OpenAI",
+  "version": "1.1.0",
+  "entrypoint": "main.ts",
+  "protocol": "1.0",
+  "description": "Discovers models and collects authoritative organization usage and cost data when the supplied key permits it.",
+  "capabilities": ["catalog", "costs", "health"],
+  "permissions": { "net": ["api.openai.com:443"] },
+  "configSchema": {
+    "type": "object",
+    "required": ["apiKey"],
+    "properties": { "apiKey": { "type": "string", "secret": true, "title": "Admin API key" } }
+  }
+}

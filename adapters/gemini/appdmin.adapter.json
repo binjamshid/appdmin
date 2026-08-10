@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "id": "appdmin.gemini",
+  "name": "Google Gemini",
+  "version": "1.0.0",
+  "entrypoint": "main.ts",
+  "protocol": "1.0",
+  "description": "Discovers Gemini models and reports unavailable account-cost facts honestly when the API exposes none.",
+  "capabilities": ["catalog", "costs", "health"],
+  "permissions": { "net": ["generativelanguage.googleapis.com:443"] },
+  "configSchema": {
+    "type": "object",
+    "required": ["apiKey"],
+    "properties": { "apiKey": { "type": "string", "secret": true, "title": "API key" } }
+  }
+}

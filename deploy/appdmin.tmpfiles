@@ -1,0 +1,3 @@
+d /var/lib/appdmin 0700 appdmin appdmin -
+d /etc/appdmin 0750 root appdmin -
+

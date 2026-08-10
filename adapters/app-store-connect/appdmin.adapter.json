@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "id": "appdmin.app-store-connect",
+  "name": "App Store Connect",
+  "version": "1.1.0",
+  "entrypoint": "main.ts",
+  "protocol": "1.0",
+  "description": "Discovers Apple apps and provides source-accurate App Store operational data.",
+  "capabilities": ["catalog", "metrics", "costs", "health"],
+  "permissions": { "net": ["api.appstoreconnect.apple.com:443"] },
+  "configSchema": {
+    "type": "object",
+    "required": ["issuerId", "keyId", "privateKey"],
+    "properties": {
+      "issuerId": { "type": "string", "title": "Issuer ID" },
+      "keyId": { "type": "string", "title": "Key ID" },
+      "privateKey": { "type": "string", "secret": true, "title": "Private key (.p8 contents)" },
+      "vendorNumber": { "type": "string", "title": "Vendor number (optional)" }
+    }
+  }
+}

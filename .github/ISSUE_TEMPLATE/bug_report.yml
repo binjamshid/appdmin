@@ -1,0 +1,24 @@
+name: Bug report
+description: Report reproducible Appdmin behavior that is not a security vulnerability.
+body:
+  - type: markdown
+    attributes:
+      value: Do not include credentials, customer data, prompts, responses, or private hostnames.
+  - type: input
+    id: version
+    attributes: { label: Appdmin version }
+    validations: { required: true }
+  - type: dropdown
+    id: install
+    attributes:
+      label: Installation
+      options: [Docker Compose, systemd, local development]
+    validations: { required: true }
+  - type: textarea
+    id: steps
+    attributes: { label: Reproduction steps }
+    validations: { required: true }
+  - type: textarea
+    id: expected
+    attributes: { label: Expected and actual behavior }
+    validations: { required: true }

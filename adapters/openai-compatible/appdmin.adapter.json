@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "id": "appdmin.openai-compatible",
+  "name": "OpenAI-compatible",
+  "version": "1.0.0",
+  "entrypoint": "main.ts",
+  "protocol": "1.0",
+  "description": "Connects to a user-specified OpenAI-compatible endpoint without assuming billing support.",
+  "capabilities": ["catalog", "costs", "health"],
+  "permissions": { "net": ["*"] },
+  "configSchema": {
+    "type": "object",
+    "required": ["baseUrl", "apiKey"],
+    "properties": {
+      "baseUrl": { "type": "string", "title": "Base URL" },
+      "apiKey": { "type": "string", "secret": true, "title": "API key" }
+    }
+  }
+}

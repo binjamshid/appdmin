@@ -1,0 +1,40 @@
+[Unit]
+Description=Appdmin self-hosted operations console
+Documentation=https://github.com/appdmin/appdmin
+After=network-online.target postgresql.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=appdmin
+Group=appdmin
+WorkingDirectory=/opt/appdmin
+EnvironmentFile=/etc/appdmin/appdmin.env
+Environment=DENO_DIR=/var/lib/appdmin/deno-cache
+ExecStartPre=/usr/bin/deno run --allow-env --allow-net --allow-read --allow-sys /opt/appdmin/src/cli.ts migrate
+ExecStart=/usr/bin/deno run --cached-only --allow-env --allow-net --allow-read=/opt/appdmin,/var/lib/appdmin --allow-write=/var/lib/appdmin --allow-run=/usr/bin/deno --allow-sys /opt/appdmin/src/cli.ts serve
+Restart=on-failure
+RestartSec=5s
+TimeoutStopSec=20s
+
+NoNewPrivileges=yes
+PrivateTmp=yes
+PrivateDevices=yes
+ProtectSystem=strict
+ProtectHome=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectKernelLogs=yes
+ProtectControlGroups=yes
+ProtectClock=yes
+RestrictRealtime=yes
+RestrictSUIDSGID=yes
+LockPersonality=yes
+MemoryDenyWriteExecute=yes
+SystemCallArchitectures=native
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+ReadWritePaths=/var/lib/appdmin
+UMask=0077
+
+[Install]
+WantedBy=multi-user.target

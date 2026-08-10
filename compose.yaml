@@ -1,0 +1,43 @@
+services:
+  postgres:
+    image: postgres:17.6-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: appdmin
+      POSTGRES_USER: appdmin
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
+    volumes:
+      - appdmin-postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U appdmin -d appdmin"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    security_opt: ["no-new-privileges:true"]
+
+  appdmin:
+    build: .
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgres://appdmin:${POSTGRES_PASSWORD}@postgres:5432/appdmin
+      APPDMIN_SECRET_KEY: ${APPDMIN_SECRET_KEY:?Set APPDMIN_SECRET_KEY in .env}
+      APPDMIN_ORIGIN: ${APPDMIN_ORIGIN:-http://localhost:8787}
+      APPDMIN_HOST: 0.0.0.0
+      APPDMIN_PORT: 8787
+      APPDMIN_ADAPTER_ROOT: /var/lib/appdmin/adapters
+      APPDMIN_SOURCE_URL: ${APPDMIN_SOURCE_URL:-https://github.com/appdmin/appdmin}
+    ports:
+      - "${APPDMIN_PORT:-8787}:8787"
+    read_only: true
+    tmpfs: ["/tmp:size=64m,mode=1777"]
+    volumes:
+      - appdmin-data:/var/lib/appdmin
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: ["ALL"]
+
+volumes:
+  appdmin-postgres:
+  appdmin-data:

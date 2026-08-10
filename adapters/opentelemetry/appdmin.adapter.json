@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "id": "appdmin.opentelemetry",
+  "name": "OpenTelemetry usage",
+  "version": "1.0.0",
+  "entrypoint": "main.ts",
+  "protocol": "1.0",
+  "description": "Accepts metadata-only inference usage for product, model, request, token, cost, and latency attribution.",
+  "capabilities": ["metrics", "costs", "health"],
+  "permissions": {},
+  "configSchema": { "type": "object", "properties": {} }
+}

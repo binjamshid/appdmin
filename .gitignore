@@ -1,0 +1,13 @@
+.env
+.env.*
+!.env.example
+.DS_Store
+.deno/
+.appdmin/
+coverage/
+dist/
+backups/
+.superpowers/
+.impeccable/
+playwright-report/
+test-results/
