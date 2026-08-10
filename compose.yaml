@@ -28,7 +28,7 @@ services:
       APPDMIN_HOST: 0.0.0.0
       APPDMIN_PORT: 8787
       APPDMIN_ADAPTER_ROOT: /var/lib/appdmin/adapters
-      APPDMIN_SOURCE_URL: ${APPDMIN_SOURCE_URL:-https://github.com/appdmin/appdmin}
+      APPDMIN_SOURCE_URL: ${APPDMIN_SOURCE_URL:-https://github.com/Ajraba04/appdmin}
     ports:
       - "${APPDMIN_PORT:-8787}:8787"
     read_only: true

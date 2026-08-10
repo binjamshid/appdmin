@@ -1,6 +1,6 @@
 [Unit]
 Description=Appdmin self-hosted operations console
-Documentation=https://github.com/appdmin/appdmin
+Documentation=https://github.com/Ajraba04/appdmin
 After=network-online.target postgresql.service
 Wants=network-online.target
 

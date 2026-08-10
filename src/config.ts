@@ -50,7 +50,7 @@ export const config = {
   trustProxy: optional("APPDMIN_TRUST_PROXY", "false") === "true",
   adapterRoot: optional("APPDMIN_ADAPTER_ROOT", "./.appdmin/adapters"),
   denoExecutable: optional("APPDMIN_DENO", Deno.execPath()),
-  sourceUrl: optional("APPDMIN_SOURCE_URL", "https://github.com/appdmin/appdmin"),
+  sourceUrl: optional("APPDMIN_SOURCE_URL", "https://github.com/Ajraba04/appdmin"),
   collectionMinutes: positiveNumber("APPDMIN_COLLECTION_MINUTES", 15),
   session: {
     idleMinutes: positiveNumber("APPDMIN_SESSION_IDLE_MINUTES", 30),
