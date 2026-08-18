@@ -11,6 +11,7 @@ const CAPABILITIES = new Set<Capability>([
   "mail",
   "infrastructure",
   "health",
+  "privacy_telemetry",
 ]);
 
 export class ManifestError extends Error {}

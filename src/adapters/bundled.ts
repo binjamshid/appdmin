@@ -9,6 +9,7 @@ export const BUNDLED_ADAPTERS = [
   "openrouter",
   "openai-compatible",
   "opentelemetry",
+  "masoon-telemetry",
 ] as const;
 
 export async function bundledAdapter(

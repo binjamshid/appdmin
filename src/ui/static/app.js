@@ -14,6 +14,7 @@ const NAV = [
   ["costs", "Costs", "◒", ["costs"]],
   ["people", "People", "♙", ["people"]],
   ["operations", "Operations", "⌘", ["infrastructure", "health"]],
+  ["masoon", "Masoon", "◉", ["privacy_telemetry"]],
   ["actions", "Actions", "↗", ["actions"]],
   ["audit", "Audit", "◷", []],
   ["settings", "Settings", "⚙", []],
@@ -389,6 +390,52 @@ function renderOperations() {
   document.querySelector("#test-all")?.addEventListener("click", async () => {
     for (const adapter of adapters.filter((item) => item.enabled)) await testAdapter(adapter.id);
   });
+}
+
+async function renderMasoonTelemetry() {
+  setPage("Masoon", "Privacy-thresholded telemetry");
+  const data = await api("/masoon-telemetry");
+  const labels = {
+    app_launch: "App launches",
+    tab_opened: "Tab opens",
+    mushaf_opened: "Mushaf opens",
+    audio_download_succeeded: "Audio downloads succeeded",
+    audio_download_failed: "Audio downloads failed",
+    reference_download_succeeded: "Book downloads succeeded",
+    reference_download_failed: "Book downloads failed",
+    share_completed: "Shares completed",
+  };
+  const totals = new Map();
+  for (const row of data.rows) totals.set(row.metric, (totals.get(row.metric) ?? 0) + row.count);
+  view.innerHTML = `<section class="page-intro"><div><h2>Anonymous daily aggregates</h2><p>${
+    escapeHtml(data.source)
+  }. This surface cannot query users, devices, Quran coordinates, content, searches, reciters, books, or journeys.</p></div></section>
+    <section class="metric-grid">${
+    [...totals].slice(0, 4).map(([metric, count]) =>
+      `<article class="metric-card"><span>${escapeHtml(labels[metric] ?? metric)}</span><strong>${
+        formatNumber(count)
+      }</strong><small>visible only after ${data.suppressionThreshold} events per day/build</small></article>`
+    ).join("") ||
+    `<article class="metric-card"><span>Visible aggregates</span><strong>None</strong><small>Low-volume slices are suppressed</small></article>`
+  }</section>
+    <section class="panel"><header class="panel-head"><div><p class="eyebrow">Privacy boundary</p><h2>Retention and provenance</h2></div></header>
+      <div class="review-grid"><article><span>Suppression</span><strong>≥ ${data.suppressionThreshold}</strong><small>events per day/release/build/metric</small></article><article><span>Retry batches</span><strong>${data.rawRetentionDays} days</strong><small>identifier-free and not shown here</small></article><article><span>Daily totals</span><strong>${data.aggregateRetentionDays} days</strong><small>first-party only</small></article></div></section>
+    <section class="panel"><header class="panel-head"><div><p class="eyebrow">Masoon first-party</p><h2>Thresholded release health</h2></div><span>${data.rows.length} visible slices</span></header>${
+    data.rows.length
+      ? `<div class="data-table"><div class="table-head four"><span>Day</span><span>Release</span><span>Metric</span><span>Count</span></div>${
+        data.rows.map((row) =>
+          `<div class="table-row four"><span>${escapeHtml(row.day)}</span><span>${
+            escapeHtml(row.release)
+          } (${escapeHtml(row.build)})</span><span>${
+            escapeHtml(labels[row.metric] ?? row.metric)
+          }</span><span>${formatNumber(row.count)}</span></div>`
+        ).join("")
+      }</div>`
+      : emptyState(
+        "No reportable slices",
+        "Nothing has crossed the privacy threshold. Appdmin does not reveal the suppressed values.",
+      )
+  }</section>`;
 }
 
 function renderAudit() {
@@ -769,6 +816,7 @@ async function route() {
     products: renderProducts,
     costs: renderCosts,
     operations: renderOperations,
+    masoon: renderMasoonTelemetry,
     audit: renderAudit,
     settings: renderSettings,
     people: () => {

@@ -28,6 +28,7 @@ import {
 } from "../core/repository.ts";
 import type { DiscoveredProduct, Observation } from "../core/types.ts";
 import type { JSONValue } from "postgres";
+import { validateMasoonTelemetry } from "../core/masoon_telemetry.ts";
 
 export const api = new Hono();
 api.use("*", requireSession);
@@ -41,6 +42,25 @@ api.put("/onboarding/:step", async (c) => {
   return c.json(await saveOnboarding(c.req.param("step"), body.complete === true));
 });
 api.get("/products", async (c) => c.json(await products()));
+api.get("/masoon-telemetry", async (c) => {
+  const installed = await adapters() as Array<{
+    id: string;
+    enabled: boolean;
+    manifest?: { capabilities?: string[] };
+  }>;
+  const adapter = installed.find((item) =>
+    item.enabled && item.manifest?.capabilities?.includes("privacy_telemetry")
+  );
+  if (!adapter) return c.json({ error: "masoon_telemetry_not_configured" }, 404);
+  let process: AdapterProcess | null = null;
+  try {
+    ({ process } = await processFor(String(adapter.id)));
+    const value = await process.call("privacy_telemetry.snapshot", { instanceId: adapter.id });
+    return c.json(validateMasoonTelemetry(value));
+  } finally {
+    await process?.stop();
+  }
+});
 api.patch(
   "/products/:id",
   async (c) => c.json(await updateProduct(c.req.param("id"), await c.req.json())),

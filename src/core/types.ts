@@ -8,7 +8,8 @@ export type Capability =
   | "actions"
   | "mail"
   | "infrastructure"
-  | "health";
+  | "health"
+  | "privacy_telemetry";
 
 export type ObservationQuality =
   | "live"

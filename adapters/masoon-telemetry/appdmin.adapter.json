@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "id": "appdmin.masoon-telemetry",
+  "name": "Masoon private telemetry",
+  "version": "1.0.0",
+  "entrypoint": "main.ts",
+  "protocol": "1.0",
+  "description": "Reads only privacy-thresholded Masoon daily aggregates; never mobile events, users, devices, or Quran content.",
+  "capabilities": ["privacy_telemetry", "health"],
+  "permissions": { "net": ["masoon-api.binjamshid.com:443"] },
+  "configSchema": {
+    "type": "object",
+    "required": ["adminToken"],
+    "properties": {
+      "adminToken": { "type": "string", "secret": true, "title": "Read-only telemetry token" }
+    }
+  }
+}
