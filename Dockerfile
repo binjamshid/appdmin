@@ -10,6 +10,7 @@ WORKDIR /app
 ENV DENO_DIR=/var/lib/appdmin/deno-cache APPDMIN_HOST=0.0.0.0 APPDMIN_PORT=8787
 COPY --from=cache /deno-dir /deno-dir
 COPY --from=cache /app /app
+COPY LICENSE ./
 COPY migrations ./migrations
 COPY deploy/container-entrypoint.sh /usr/local/bin/appdmin-entrypoint
 RUN mkdir -p /var/lib/appdmin/deno-cache && \

@@ -1,7 +1,7 @@
 {
   "name": "@appdmin/core",
   "version": "2.0.0",
-  "license": "AGPL-3.0-or-later",
+  "license": "LicenseRef-Binjamshid-Public-Fork-1.0",
   "exports": {
     ".": "./src/main.ts",
     "./cli": "./src/cli.ts",

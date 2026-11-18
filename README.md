@@ -18,7 +18,24 @@ adapters without baking an organization's products or infrastructure into the co
 - **One polished surface:** responsive, capability-aware dashboard and resumable GUI onboarding.
 - **Two equal deployment paths:** Docker Compose and hardened native systemd.
 
-Appdmin is licensed under AGPL-3.0-or-later.
+## License
+
+For Appdmin revisions publicly released by binjamshid beginning with adoption on `main`, the
+[Binjamshid Public Fork License, Version 1.0](LICENSE) applies to material binjamshid has authority
+to license. Separately licensed third-party material retains its terms and notices.
+
+This license prohibits commercial use by or on behalf of for-profit organizations. If you edit
+covered software, you must publish the corresponding source of each modified version under the same
+license in a public version-control repository, including versions you only edit locally. Publish
+within 30 calendar days of the edit or before distributing the version or allowing others to use it
+as a service, whichever comes first, subject to the license's security-fix exception.
+
+The [last AGPL revision] and earlier revisions released under [AGPL-3.0-or-later](LICENSE-AGPL-3.0)
+remain available under their original terms. The AGPL permits commercial use subject to its
+conditions. AGPL-only changes require separate permission from their copyright holders before
+inclusion in a work released under the Binjamshid Public Fork License.
+
+[last AGPL revision]: https://github.com/binjamshid/appdmin/tree/923cae2cab243be656b41cf649e926e752e4519a
 
 ## Quick start with Docker Compose
 

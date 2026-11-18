@@ -212,7 +212,7 @@ api.get(
       version: "2.0.0",
       runtime: Deno.version.deno,
       sourceUrl: config.sourceUrl,
-      license: "AGPL-3.0-or-later",
+      license: "Binjamshid Public Fork License, Version 1.0",
     }),
 );
 
